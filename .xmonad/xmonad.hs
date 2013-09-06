@@ -21,7 +21,7 @@ import XMonad.Hooks.SetWMName
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
-myTerminal      = "terminal"
+myTerminal      = "xfce4-terminal"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
