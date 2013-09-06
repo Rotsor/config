@@ -1,0 +1,4 @@
+xset b off
+. "`dirname "$0"`/initVars"
+xmonad
+
