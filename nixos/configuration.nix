@@ -11,34 +11,24 @@
  };
 # users.defaultUserShell = "/run/current-system/sw/bin/bash";
  boot.supportedFilesystems = [ "zfs" ];
-# boot.kernelModules = [ "acpi-call" "tp_smapi" ];
 # boot.extraModulePackages= [ pkgs.linuxPackages.acpi_call  pkgs.linuxPackages.tp_smapi ];
+# boot.kernelModules = [ "acpi-call" "tp_smapi" ];
   require = [
-    # Include the configuration for part of your system which have been
-    # detected automatically.
     ./hardware-configuration.nix
   ]; # 
   boot.kernelPackages = pkgs.linuxPackages_3_14; # pkgs.linuxPackagesFor (pkgs.linux_3_1.override { extraConfig="DRM_RADEON_KMS y"; }) pkgs.linuxPackages;
-#  hardware.firmware = [ pkgs.firmwareLinuxNonfree ];
-  boot.initrd.kernelModules = [
-    # Specify all kernel modules that are necessary for mounting the root
-    # file system.
-    #
-    "ext4" "ata_piix" "fuse" "kvm-amd" "tun" "vitrio" "kvm-intel" "hplip" "iwldvm" ];
+
   time.timeZone = "Europe/London";
   boot.loader.grub = {
-    # Use grub 2 as boot loader.
     enable = true;
     version = 2;
-
-    # Define on which hard drive you want to install Grub.
     device = "/dev/disk/by-id/ata-Samsung_SSD_840_EVO_1TB_S1D9NSAF607839L";
     configurationName = "nixos-chronos";
   };
 
   networking = {
     hostId="34589711";
-    hostName = "nixos-chronos"; # Define your hostname.
+    hostName = "nixos-chronos";
     interfaceMonitor.enable = false; # Watch for plugged cable.
     wireless = {
       enable = true;
@@ -64,12 +54,8 @@
   };
   services.printing.enable = true;
   services.printing.drivers = [ pkgs.hplip ];
-  # Add file system entries for each partition that you want to see mounted
-  # at boot time.  You can add filesystems which are not mounted at boot by
-  # adding the noauto option.
+
   fileSystems = [
-    # Mount the root file system
-    #
     { mountPoint = "/";
       device = "chronos/zfs1";
       fsType = "zfs";
@@ -87,20 +73,9 @@
       fsType = "nfs";
       options = "nolock,vers=4";
     }
-
-    # Copy & Paste & Uncomment & Modify to add any other file system.
-    #
-    # { mountPoint = "/data"; # where you want to mount the device
-    #   device = "/dev/sdb"; # the device or the label of the device
-    #   # label = "data";
-    #   fsType = "ext3";      # the type of the partition.
-    #   options = "data=journal";
-    # }
   ];
 
   swapDevices = [
-    # List swap partitions that are mounted at boot time.
-    
     # { }
   ];
 
@@ -111,9 +86,6 @@
      defaultLocale = "en_GB.UTF-8";
    };
 
-  # List services that you want to enable:
-
-  # Add an OpenSSH daemon.
   services.openssh.enable = true;
   services.udev.extraRules = "SUBSYSTEM==\"usb\", ATTRS{idVendor}==\"03f0\", ATTRS{idProduct}==\"7e04\", MODE:=\"0666\"";
 
