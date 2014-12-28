@@ -1,23 +1,28 @@
 {
   chromium = {
-    enableGoogleTalkPlugin = true;
-    jre = true;
+  #  enableGoogleTalkPlugin = true;
+  #  jre = true;
   #  enableMPlayer = true;
     enableDjvu = true;
     enableQuakeLive = true;
   };
+  allowUnfree = true;
   firefox = {
     enableQuakeLive = true;
-    enableGnash = true;
-    enableAdobeFlash = false;
+    enableGnash = false;
+    enableAdobeFlash = true;
   };
-#  cabal.libraryProfiling = false;
+  cabal.libraryProfiling = true;
   packageOverrides = pkgs : 
     let 
       haskellPkgs = self : with self; rec {
-        standardPkgs = [ haskellPlatform xmonad xmonadContrib xmonadExtras QuickCheck text darcs OpenAL OpenGLRaw xml HaXml filepath csv pandoc gtk2hsC2hs cairo pango gio gtk glade Crypto MemoTrie tagsoup ansiTerminal yesod regexTdfa deepseq X11 yesodDefault SHA curl httpConduit GLFW json regexPCRE shake lens Agda criterion diagrams diagramsCairo diagramsGtk MaybeT MissingH ]; # criterion diagrams Agda
-        customPkgs = [ suave ];
-        allPkgs = customPkgs ++ standardPkgs;
+        standardPkgs = [ MemoTrie xmonad xmonadContrib xmonadExtras stm mtl void scientific Agda HsOpenSSL linear MemoTrie dataBinaryIeee754 diagrams  ];  # [ xmonad xmonadContrib xmonadExtras QuickCheck text OpenAL OpenGLRaw xml HaXml filepath csv pandoc gtk2hsC2hs cairo pango gio gtk glade Crypto tagsoup ansiTerminal regexTdfa deepseq X11 SHA curl httpConduit GLFW json shake lens cabalInstall criterion diagrams MaybeT MissingH HFuse vacuum vacuumGraphviz geniplate hashtables strict yesod yesodDefault dataHash haskellSrcExts JuicyPixels freetype2 gloss ]; # diagramsGtk criterion diagrams  STMonadTrans 
+# regexPCRE   boxes equivalence darcs  diagramsCairo
+        customPkgs = [ fingertree ]; #suave ];
+	# yesod yesodDefault 
+        allPkgs = standardPkgs; #[ xmonad xmonadContrib xmonadExtras
+	# QuickCheck
+	# ]; # customPkgs ++ standardPkgs;
       };
     in
     with pkgs;
@@ -26,15 +31,27 @@
       paths = envPaths;
     }; in
     rec {
-    hsEnv = pkgs.haskellPackages.ghcWithPackages (self : (haskellPkgs self).allPkgs /*standardPkgs*/);
+    
+#    perl = pkgs.stdenv.lib.overrideDerivation pkgs.perl (oldAttrs : {
+#         dontStrip = true;
+#       });
+
+    hsMain = pkgs.haskellPackages_ghc783.ghcWithPackagesOld (self : (haskellPkgs self).allPkgs /*standardPkgs*/);
+    hsCodeforces = pkgs.haskellPackages_ghc763.ghcWithPackages (self : with self; []);
+    hsEnv = hsMain; # hsMain;
     devEnv = myEnv "rotsor-dev" [
+#        gcc
         hsEnv
 	gdb
 	mono
 	jdk
 	php
 	scala
-	texLive
+	rust
+#	texLive
+      ];
+    tryingOut = myEnv "rotsor-trying-out" [
+        retroshare st
       ];
     myCoreTools = myEnv "rotsor-core" [
         curl
@@ -71,7 +88,7 @@
 	telnet
 	iotop
 	lm_sensors
-	patchelfUnstable
+	patchelf
 	pmutils # power management
 	tor
 	unetbootin
@@ -81,7 +98,7 @@
       ];
 
     allFonts = buildEnv { name = "all-fonts"; paths = [
-    wqy_zenhei vistafonts unifont ucsFonts ubuntu_font_family ttf_bitstream_vera tipa terminus_font tempora_lgc theano oldstandard mph_2b_damase lmodern lmmath libertine junicode inconsolata gentium freefont_ttf dosemu_fonts dejavu_fonts cm_unicode corefonts cantarell_fonts bakoma_ttf arkpandora_ttf anonymousPro andagii clearlyU
+    wqy_zenhei vistafonts unifont ubuntu_font_family ttf_bitstream_vera tipa terminus_font tempora_lgc theano oldstandard mph_2b_damase lmodern lmmath libertine junicode inconsolata gentium freefont_ttf dosemu_fonts dejavu_fonts cm_unicode corefonts cantarell_fonts bakoma_ttf anonymousPro andagii clearlyU # ucsFonts # ucsFonts excluded because they are raster fonts chosen by fontconfig instead of vector fonts # arkpandora_ttf 
     ]; ignoreCollisions = true; };
     myFonts = myEnv "rotsor-fonts" [
 /*        unifont
@@ -96,7 +113,7 @@
         aspellDicts.en
 	dmenu
 	scrot
-	skype
+#	skype
         evince
 	firefoxWrapper
 	geeqie
@@ -112,13 +129,14 @@
 	kde4.ktorrent
 	libreoffice
 	lyx
-	mplayer
+	mplayer2
 	vlc
 	trayer
 	xdg_utils
 	xfce.terminal
+	gnome3_12.gnome_terminal
 	xvidcap
-	chromiumDevWrapper
+	chromiumBeta
 	youtubeDL
 	xfig
 	thunderbird
@@ -130,6 +148,7 @@
 	myFun
 	myCoreTools
 	devEnv
+	tryingOut
 #	feh
 #	
 #	freetalk
