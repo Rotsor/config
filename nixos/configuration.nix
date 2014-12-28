@@ -1,8 +1,3 @@
-# Edit this configuration file which defines what would be installed on the
-# system.  To Help while choosing option value, you can watch at the manual
-# page of configuration.nix or at the last chapter of the manual available
-# on the virtual console 8 (Alt+F8).
-
 {config, pkgs, ...}:
 
 {
@@ -16,15 +11,15 @@
  };
 # users.defaultUserShell = "/run/current-system/sw/bin/bash";
  boot.supportedFilesystems = [ "zfs" ];
- boot.kernelModules = [ "acpi-call" "tp_smapi" ];
- boot.extraModulePackages= [ pkgs.linuxPackages.acpi_call  pkgs.linuxPackages.tp_smapi ];
+# boot.kernelModules = [ "acpi-call" "tp_smapi" ];
+# boot.extraModulePackages= [ pkgs.linuxPackages.acpi_call  pkgs.linuxPackages.tp_smapi ];
   require = [
     # Include the configuration for part of your system which have been
     # detected automatically.
     ./hardware-configuration.nix
   ]; # 
- # boot.kernelPackages = pkgs.linuxPackages_3_7; # pkgs.linuxPackagesFor (pkgs.linux_3_1.override { extraConfig="DRM_RADEON_KMS y"; }) pkgs.linuxPackages;
-  hardware.firmware = [ pkgs.firmwareLinuxNonfree ];
+  boot.kernelPackages = pkgs.linuxPackages_3_14; # pkgs.linuxPackagesFor (pkgs.linux_3_1.override { extraConfig="DRM_RADEON_KMS y"; }) pkgs.linuxPackages;
+#  hardware.firmware = [ pkgs.firmwareLinuxNonfree ];
   boot.initrd.kernelModules = [
     # Specify all kernel modules that are necessary for mounting the root
     # file system.
@@ -88,9 +83,9 @@
       fsType = "ext2";
     }
     { mountPoint = "/Boorg";
-      device = "192.168.2.5:/Boorg";
+      device = "192.168.1.7:/";
       fsType = "nfs";
-      options = "vers=5";
+      options = "nolock,vers=4";
     }
 
     # Copy & Paste & Uncomment & Modify to add any other file system.
