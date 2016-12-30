@@ -14,10 +14,10 @@
    group = "users";
    uid = 1000;
  };
- security.sudo.configFile = ''
-    Defaults env_reset
-    ALL ALL = NOPASSWD: /root/brightness
-  '';
+# security.sudo.configFile = ''
+#    Defaults env_reset
+#    ALL ALL = NOPASSWD: /root/brightness
+#  '';
 # users.defaultUserShell = "/run/current-system/sw/bin/bash";
  boot.supportedFilesystems = [ "zfs" ];
 # boot.extraModulePackages= [ pkgs.linuxPackages.acpi_call  pkgs.linuxPackages.tp_smapi ];
@@ -25,7 +25,7 @@
   require = [
     ./hardware-configuration.nix
   ]; # 
-  boot.kernelPackages = pkgs.linuxPackages; # _3_14; # pkgs.linuxPackagesFor (pkgs.linux_3_1.override { extraConfig="DRM_RADEON_KMS y"; }) pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_3_14; # _3_14; # pkgs.linuxPackagesFor (pkgs.linux_3_1.override { extraConfig="DRM_RADEON_KMS y"; }) pkgs.linuxPackages;
 
   time.timeZone = "Europe/London";
   boot.loader.grub = {
