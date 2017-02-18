@@ -1,9 +1,0 @@
-DEST=/home/rotsor/dumpargs.log
-
-for var in "$@"
-do
-    echo -n "\"" >> $DEST
-    printf "%q" "$var" >>  $DEST
-    echo -n "\" " >> $DEST
-done
-echo "" >> $DEST
