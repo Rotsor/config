@@ -1,25 +1,15 @@
-# Edit this configuration file which defines what would be installed on the
-# system.  To Help while choosing option value, you can watch at the manual
-# page of configuration.nix or at the last chapter of the manual available
-# on the virtual console 8 (Alt+F8).
-
-{config, pkgs, ...}:
+{ config, pkgs, ... }:
 
 {
 
   require = [
-    # Include the configuration for part of your system which have been
-    # detected automatically.
     ./hardware-configuration.nix
-  ]; # 
- # boot.kernelPackages = pkgs.linuxPackages_3_7; # pkgs.linuxPackagesFor (pkgs.linux_3_1.override { extraConfig="DRM_RADEON_KMS y"; }) pkgs.linuxPackages;
-#  hardware.firmware = [ pkgs.radeonR700 ];
+    ./shared-configuration.nix
+  ];
   boot.initrd.kernelModules = [
-    # Specify all kernel modules that are necessary for mounting the root
+    # kernel modules that are necessary for mounting the root
     # file system.
-    #
     "ext4" "ata_piix" "fuse" "kvm-amd" "tun" "vitrio" "kvm-intel" "hplip" "iwldvm" ];
-  time.timeZone = "Europe/London";
   boot.loader.grub = {
     # Use grub 2 as boot loader.
     enable = true;
@@ -84,13 +74,6 @@
     # { }
   ];
 
-   # Select internationalisation properties.
-   i18n = {
-     consoleFont = "lat9w-16";
-     consoleKeyMap = "uk";
-     defaultLocale = "en_GB.UTF-8";
-   };
-
   # List services that you want to enable:
 
   # Add an OpenSSH daemon.
@@ -108,17 +91,12 @@
 
   # Add XServer (default if you have used a graphical iso)
   services.xserver = {
+    # some settings inherited from configuration-shared.nix
     videoDrivers = ["ati"];
     enable = true;
-    layout = "gb,ru";
-    xkbOptions = "grp:caps_toggle, grp_led:caps";
     desktopManager.kde4.enable = false;
-    synaptics.enable = true;
   };
 
-  # Add the NixOS Manual on virtual console 8
-  services.nixosManual.showManual = true;
   environment.systemPackages = [ pkgs.fuse ];
-  nix.useChroot = true;
 }
 
