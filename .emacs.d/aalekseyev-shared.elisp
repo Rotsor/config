@@ -1,13 +1,24 @@
-(setq scroll-preserve-screen-position t)
-(setq scroll-step 5)
-(setq x-select-enable-clipboard t)
 
-(load "/home/rotsor/.emacs.d/dup-line.elisp")
+;; things that seem crazy not to have by default
+(setq scroll-preserve-screen-position t)
+(setq scroll-step 1) # this is ok, but smooth-scrolling is better
+(setq x-select-enable-clipboard t)
 (menu-bar-mode -99)
 (tool-bar-mode -1)
 (setq visible-bell 1)
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
+(set 'column-number-mode t)
+
+;; things that I think are good
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
-(global-set-key (kbd "C-x k") 'kill-this-buffer)
+(load "/home/rotsor/.emacs.d/dup-line.elisp")
+(load "/home/rotsor/repos/smooth-scrolling/smooth-scrolling.el")
+(smooth-scrolling-mode 1)
+
+;; shell script mode
+(set 'sh-basic-offset 2)
+(set 'sh-indentation 2)
+
