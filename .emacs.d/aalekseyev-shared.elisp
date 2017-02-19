@@ -1,7 +1,7 @@
 
 ;; things that seem crazy not to have by default
 (setq scroll-preserve-screen-position t)
-(setq scroll-step 1) # this is ok, but smooth-scrolling is better
+(setq scroll-step 1) ;; this is ok, but smooth-scrolling is better
 (setq x-select-enable-clipboard t)
 (menu-bar-mode -99)
 (tool-bar-mode -1)
