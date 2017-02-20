@@ -25,7 +25,7 @@
   require = [
     ./hardware-configuration.nix
   ]; # 
-  boot.kernelPackages = pkgs.linuxPackages; # _3_14; # pkgs.linuxPackagesFor (pkgs.linux_3_1.override { extraConfig="DRM_RADEON_KMS y"; }) pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_3_14; # _3_14; # pkgs.linuxPackagesFor (pkgs.linux_3_1.override { extraConfig="DRM_RADEON_KMS y"; }) pkgs.linuxPackages;
 
   time.timeZone = "Europe/London";
   boot.loader.grub = {
