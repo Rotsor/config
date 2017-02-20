@@ -19,12 +19,15 @@
   services.openssh.enable = true;
 
   services.xserver = {
-    videoDrivers = [ "nvidia" ];
+#    videoDrivers = [ "nvidia" ];
     enable = true;
-    desktopManager.kde4.enable = false;
-    services.xserver.displayManager.kdm.enable = true;
-    services.xserver.desktopManager.kde4.enable = true;
+#    displayManager.kdm.enable = true;
+#    desktopManager.kde4.enable = true;
   };
+
+  hardware.opengl.driSupport32Bit = true;
+  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.support32Bit = true;
 
   boot.blacklistedKernelModules = [ ]; #"nouveau" ];
 

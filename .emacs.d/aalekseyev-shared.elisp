@@ -17,6 +17,7 @@
 (load "/home/rotsor/.emacs.d/dup-line.elisp")
 (load "/home/rotsor/repos/smooth-scrolling/smooth-scrolling.el")
 (smooth-scrolling-mode 1)
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; shell script mode
 (set 'sh-basic-offset 2)

@@ -1,8 +1,0 @@
-export PATH=/home/rotsor/annex/bin:/home/rotsor/.cabal/bin:"$PATH"
-export LD_LIBRARY_PATH="$HOME/.nix-profile/lib64:$HOME/.nix-profile/lib:$LD_LIBRARY_PATH"
-export LIBRARY_PATH="$LD_LIBRARY_PATH"
-export C_INCLUDE_PATH="$HOME/.nix-profile/include:$C_INCLUDE_PATH"
-export CPLUS_INCLUDE_PATH="$HOME/.nix-profile/include:$CPLUS_INCLUDE_PATH"
-export HISTIGNORE='&:ls:cd ~:cd ..:[bf]g:exit:h:history'
-export HISTCONTROL=erasedups
-

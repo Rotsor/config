@@ -6,7 +6,7 @@
     defaultLocale = "en_GB.UTF-8";
   };
   time.timeZone = "Europe/London";
-  nix.useChroot = true;
+  nix.useSandbox = true;
   services.xserver = {
     layout = "gb,ru";
     xkbOptions = "grp:caps_toggle, grp_led:caps";

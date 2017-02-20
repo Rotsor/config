@@ -1,4 +1,0 @@
-PKG_DIR=pkgs/development/libraries/haskell
-mkdir -p $PKG_DIR/$1
-cabal2nix cabal://$1 > $PKG_DIR/$1/default.nix
-echo "$1 = callPackage ../development/libraries/haskell/$1 {};" >> pkgs/top-level/haskell-packages.nix
