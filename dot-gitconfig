@@ -1,0 +1,8 @@
+[core]
+	pager = cat
+[user]
+	email = rotsor@gmail.com
+	name = Arseniy Alekseyev
+[color]
+	status = always
+	diff = always
