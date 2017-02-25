@@ -17,4 +17,7 @@
      isNormalUser = true;
      uid = 1000;
   };
+
+  # crazily, this is for ssh client to be able to find "xauth" program
+  services.openssh.forwardX11 = true;
 }

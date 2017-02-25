@@ -1,3 +1,6 @@
-[submodule "nixpkgs"]
+[submodule "nixos/chronos/nixpkgs"]
 	path = nixos/chronos/nixpkgs
-	url = https://github.com/NixOS/nixpkgs
+	url = https://github.com/NixOS/nixpkgs.git
+[submodule "nixos/desktop/nixpkgs"]
+	path = nixos/desktop/nixpkgs
+	url = https://github.com/NixOS/nixpkgs.git

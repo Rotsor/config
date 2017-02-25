@@ -4,13 +4,13 @@
   nixpkgs.config.allowUnfree = true;
   imports =
     [
-      ./shared-configuration.nix
+      ../shared-configuration.nix
       ./desktop-hardware.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_testing;
+  boot.kernelPackages = pkgs.linuxPackages;
 
   networking.hostName = "rotsor-desktop";
 
