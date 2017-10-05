@@ -8,6 +8,8 @@
 (setq visible-bell 1)
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 (set 'column-number-mode t)
+; make backslash not destroy the parenthesis that follows it (e.g. (\(x : int) -> y))
+(modify-syntax-entry ?\\ "." (standard-syntax-table))
 
 ;; things that I think are good
 (setq backup-directory-alist
@@ -22,4 +24,3 @@
 ;; shell script mode
 (set 'sh-basic-offset 2)
 (set 'sh-indentation 2)
-

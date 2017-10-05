@@ -1,5 +1,6 @@
 [core]
 	pager = cat
+	whitespace = -blank-at-eol
 [user]
 	email = rotsor@gmail.com
 	name = Arseniy Alekseyev
