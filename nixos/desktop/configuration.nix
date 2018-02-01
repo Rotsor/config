@@ -16,8 +16,6 @@ users.users.root.openssh.authorizedKeys.keys = [
 
   networking.hostName = "rotsor-desktop";
 
-  environment.systemPackages = with pkgs; [ ];
-
   services.openssh.enable = true;
 
   services.xserver = {
@@ -33,4 +31,6 @@ users.users.root.openssh.authorizedKeys.keys = [
 
   boot.blacklistedKernelModules = [ ]; #"nouveau" ];
 
+  virtualisation.virtualbox.host.enable = true;
+  virtualisation.virtualbox.host.headless = true;
 }

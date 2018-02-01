@@ -132,7 +132,6 @@
 
   # Add the NixOS Manual on virtual console 8
   services.nixosManual.showManual = true;
-  environment.systemPackages = [ pkgs.fuse ];
   nix.useChroot = true;
   nix.maxJobs = 4;
   services.tor = {

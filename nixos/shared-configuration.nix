@@ -17,6 +17,7 @@
      isNormalUser = true;
      uid = 1000;
   };
+  environment.systemPackages = with pkgs; [ ntfs3g ];
 
   # crazily, this is for ssh client to be able to find "xauth" program
   services.openssh.forwardX11 = true;
