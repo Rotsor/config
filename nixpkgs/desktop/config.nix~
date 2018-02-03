@@ -1,0 +1,9 @@
+{
+  packageOverrides = super: let self = super.pkgs; in
+  {
+    haskellEnv = self.haskellPackages.ghcWithPackages (p: with p; [
+    xmonad "xmonad-contrib" "xmonad-extras"
+    ]);
+    };
+
+}
