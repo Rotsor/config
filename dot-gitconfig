@@ -6,4 +6,5 @@
 	name = Arseniy Alekseyev
 [color]
 	status = always
-	diff = always
+# Magit doesn't like [diff = always]
+#	diff = always
