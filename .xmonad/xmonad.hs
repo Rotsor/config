@@ -27,9 +27,10 @@ myTerminal      = "xfce4-terminal"
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
--- Width of the window border in pixels.
---
-myBorderWidth   = 1
+-- Disabling border to support windowed-full-screen games
+-- TODO: There was a trick to only disable border when fullscreen.
+-- Should adopt that.
+myBorderWidth   = 0
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
