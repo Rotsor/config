@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+IFS='' read -r x
+
+printf "WIF private key:\n"
+printf "%s" "$x" | sha256sum -b | head -c 64 | hex-private-key-to-wif
+
+printf "\n"
+printf "Address:\n"
+printf "%s" "$x" | sha256sum -b | head -c 64 | runhaskell ~/bin/der.hs | generate-bitcoin-address

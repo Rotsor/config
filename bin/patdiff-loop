@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+DATA=""
+
+while true
+do
+  DATA_NEW=$(xclip -o -selection clipboard)
+  if [ "$DATA_NEW" = "$DATA" ]
+  then
+    sleep 0.2
+    printf "."
+  else
+    sleep 0.2
+    printf "+"
+    tmp1=$(mktemp)
+    tmp2=$(mktemp)
+    printf "%s" "$DATA" > "$tmp1"
+    printf "%s" "$DATA_NEW" > "$tmp2"
+    git diff --no-index --word-diff "$tmp1" "$tmp2"
+    DATA=$DATA_NEW
+    rm "$tmp1"
+    rm "$tmp2"
+  fi
+done

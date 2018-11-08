@@ -1,0 +1,15 @@
+microsoft() {
+ local MOUSE="USB Optical Mouse"
+ xinput set-prop "$MOUSE" "Device Accel Profile" 2
+ xinput set-prop "$MOUSE" "Device Accel Constant Deceleration" 1
+ xinput set-prop "$MOUSE" "Device Accel Velocity Scaling" 0.5
+}
+razer() {
+ local MOUSE="Razer  Razer Abyssus"
+ xinput set-prop "$MOUSE" "Device Accel Profile" 2
+ xinput set-prop "$MOUSE" "Device Accel Constant Deceleration" 5
+ xinput set-prop "$MOUSE" "Device Accel Velocity Scaling" 10
+}
+razer
+microsoft
+

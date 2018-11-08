@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+declare -a base58=(
+      1 2 3 4 5 6 7 8 9
+    A B C D E F G H   J K L M N   P Q R S T U V W X Y Z
+    a b c d e f g h i j k   m n o p q r s t u v w x y z
+)
+
+decodeBase58() {
+    sed -e's/^\(1*\).*/\1/' -e's/1/00/g' | tr -d '\n'
+    dc -e "$dcr 16o0$(sed 's/./ 58*l&+/g' <<<$1)p" |
+    while read n; do echo -n ${n/\\/}; done
+}
+encodeBase58() {
+    IFS='' read -r x
+    echo -n "$x" | sed -e's/^\(\(00\)*\).*/\1/' -e's/00/1/g' | tr -d '\n'
+    dc -e "16i ${x^^} [3A ~r d0<x]dsxx +f" |
+    while read -r n; do echo -n "${base58[n]}"; done
+    x=clobbered
+}
+
+uppercase() {
+  tr /a-z/ /A-Z/ 
+}
+
+head -c 64 | (printf '80'; uppercase) | {
+ IFS='' read -r PK
+ CHECKSUM=$(
+  printf "%s" "$PK" |
+  xxd -r -p | sha256sum -b | head -c 64 | \
+  xxd -r -p | sha256sum -b | head -c 64 | uppercase | head -c 8)
+ printf "%s%s" "$PK" "$CHECKSUM" | encodeBase58
+}

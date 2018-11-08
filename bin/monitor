@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# Not necessary if auto-detection works
+# xrandr --output "$OUTPUT" --set "Broadcast RGB" "Full"; xrandr --output "$OUTPUT" --mode 1024x768; xrandr --output "$OUTPUT" --mode 1920x1080
+LEFT="HDMI-1"
+RIGHT="DVI-D-1"
+xrandr --output "$RIGHT" --auto
+xrandr --output "$LEFT" --auto
+xrandr --output "$LEFT" --primary
+xrandr --output "$RIGHT" --right-of "$LEFT"
