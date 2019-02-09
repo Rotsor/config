@@ -36,5 +36,5 @@ users.users.root.openssh.authorizedKeys.keys = [
 
   environment.enableDebugInfo = true;
 
-  system.nixos.stateVersion = "18.03";
+  system.stateVersion = "18.03";
 }
