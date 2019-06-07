@@ -1,6 +1,16 @@
+(defun load-relative (filename)
+  (load
+   (expand-file-name
+    filename
+    (if load-file-name
+	(file-name-directory load-file-name)
+      default-directory)))  
+  )
+
 (font-lock-add-keywords 'haskell-mode '(("undefined" . font-lock-warning-face)))
 
-(load "/home/rotsor/.emacs.d/aalekseyev-shared.elisp")
+(load-relative
+  ".emacs.d/aalekseyev-shared.el")
 
 ;; (require 'caml)
 
