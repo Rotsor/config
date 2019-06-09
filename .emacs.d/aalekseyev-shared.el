@@ -1,3 +1,12 @@
+(defun load-relative (filename)
+  (load
+   (expand-file-name
+    filename
+    (if load-file-name
+	(file-name-directory load-file-name)
+      default-directory)))  
+  )
+
 ;; things that seem crazy not to have by default
 (setq x-select-enable-clipboard t)
 (menu-bar-mode -99)
@@ -13,6 +22,10 @@
       `((".*" ,temporary-file-directory t)))
 (load-relative "dup-line.el")
 (set 'indent-tabs-mode nil)
+(setq-default tab-width 4)
+(global-auto-revert-mode t)
+(setq read-quoted-char-radix 10)
+(setq inhibit-startup-screen t)
 
 ;; make backslash not destroy the parenthesis that follows it
 ;; (e.g. (\(x : int) -> y))
@@ -46,3 +59,20 @@
 ;; shell script mode
 (set 'sh-basic-offset 2)
 (set 'sh-indentation 2)
+
+;; maybe this should be taken from env. vars or something
+(require 'package)
+(add-to-list 'package-directory-list "~/.nix-profile/share/emacs/site-lisp/elpa")
+(add-to-list 'load-path "~/.nix-profile/share/emacs/site-lisp")
+
+(define-key global-map (kbd "RET") 'newline-and-indent)
+
+
+(defun load-relative-optional (path)
+  (condition-case err (load-relative path)
+    (error (print (list "error loading" path err)) nil))
+  )
+
+(load-relative-optional "ocaml.el")
+(load-relative-optional "agda.el")
+(load-relative-optional "haskell.el")
