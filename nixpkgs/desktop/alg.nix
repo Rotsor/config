@@ -12,7 +12,7 @@ pkgs.stdenv.mkDerivation {
 
   src = src;
 
-  nativeBuildInputs = [ makeWrapper ocaml git ocamlPackages.menhir ];
+  nativeBuildInputs = [ makeWrapper ocaml git ocamlPackages.ocamlbuild ocamlPackages.menhir ];
 
   preConfigure = ''
     mkdir -p "$out"/bin

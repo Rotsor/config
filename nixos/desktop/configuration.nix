@@ -37,4 +37,31 @@ users.users.root.openssh.authorizedKeys.keys = [
   environment.enableDebugInfo = true;
 
   system.stateVersion = "18.03";
+
+#  systemd.services.great-service = {
+#    description = "test service";
+#    path = [ pkgs.bash pkgs.coreutils pkgs.openssh pkgs.autossh ];
+#    script =
+#      ''
+#        exec 2>> ~/my-service.log
+#        exec >&2
+#        while true; do
+#          autossh -M 20000 -R 9999:localhost:22 -N rotsor@51.15.171.16 || echo exited with $?
+#          sleep 20
+#        done
+#        '';
+#     wantedBy = [ "default.target"];
+#  };
+  
+#  systemd.services.periodic-reboot = {
+#    description = "periodic-reboot";
+#    path = [ pkgs.bash pkgs.systemd pkgs.coreutils ];
+#    script =
+#      ''
+#        set -euo pipefail
+#        sleep 100000
+#        reboot
+#        '';
+#     wantedBy = [ "default.target"];
+#  };
 }

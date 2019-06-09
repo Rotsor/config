@@ -14,19 +14,51 @@ mkDerivation {
   doCheck = false; # tests are broken
 }; in
 
-
 {
   allowUnfree = true;
   chromium = { enableWideVine = false; };
   packageOverrides = super: let pkgs = super.pkgs; in
+  let
+    pkgs_for_agda = import <nixpkgs> { overlays = [
+        (self: super:
+let pkgs = super; in
+let hp = pkgs.haskellPackages.override {
+        overrides = new: old: rec {
+	  async = old.async;
+	  Agda = old.Agda;
+	};
+      };
+in
+let agda = pkgs.callPackage <nixpkgs/pkgs/build-support/agda> {
+    glibcLocales = if pkgs.stdenv.isLinux then pkgs.glibcLocales else null;
+    extension = self : super : { };
+    inherit (hp) Agda;
+  };
+in
+{
+  haskellPackages = hp;
+  agda = agda;
+})
+      ]; }; in
+  
   rec {
-    haskellEnv2 = pkgs.haskellPackages.ghcWithPackages (p: with p; [
-      xmonad-contrib xmonad-extras xmonad parsec MemoTrie vector-space
-      hmatrix matrix parallel eigen # 2017-10-05: [eigen] doesn't work: missing dependencies: [vector]
-      aeson # 2017-10-05: [haskoin-wallet] doesn't work: something wrong with dependencies
-      # (callPackage maxBipartiteMatching {})
-      Agda
-    ]);
+    haskellEnv2 =
+      pkgs.buildEnv {
+        name = "haskell-env2";
+        paths = [
+           (pkgs_for_agda.haskellPackages.ghcWithPackages (p: with p; [
+           xmonad-contrib xmonad-extras xmonad parsec MemoTrie vector-space
+           hmatrix matrix parallel eigen # 2017-10-05: [eigen] doesn't work: missing dependencies: [vector]
+           aeson # 2017-10-05: [haskoin-wallet] doesn't work: something wrong with dependencies
+           # (callPackage maxBipartiteMatching {})
+           Agda vulkan
+        ]))
+        pkgs_for_agda.AgdaStdlib      
+        ];
+        };
+
+    haskellEnv3 =
+      pkgs.haskell.packages;
 
 
 #    wheeledVehicle =
@@ -97,20 +129,18 @@ mkDerivation {
       ];
     };
 
+    my_own_ocaml = pkgs.callPackage <nixpkgs/development/compilers/ocaml/4.07.nix> { };
     rotsorEnv = pkgs.buildEnv {
       name = "rotsor-env";
       paths = [
         pkgs.haskellEnv2
-        pkgs.emacsPackages.ocamlMode
-	pkgs.ocaml-ng.ocamlPackages_4_04.ocaml
+        pkgs.AgdaStdlib	
+	my_own_ocaml
+	# pkgs.ocaml-ng.ocamlPackages_4_04.ocaml
       ];
     };
 
-    myEmacs = pkgs.emacsWithPackages (with
-      pkgs.emacsPackagesNg; [
-        # 2017-10-05: structured-haskell-mode doesn't seem to work
-        ghc-mod haskell-mode
-	]);
+    fooemacs = import ./emacs.nix { pkgs = pkgs; };
 
     openttd-reddit = import ./openttd.nix pkgs;
     alg = import ./alg.nix pkgs;
@@ -118,7 +148,8 @@ mkDerivation {
     rotsor-agda = pkgs.buildEnv {
       name = "rotsor-agda";
       paths = [
-        pkgs.haskellPackages.Agda
+        # pkgs.haskellPackages.
+	# pkgs.haskellPackages.
         # agdaBase
         # agdaIowaStdlib
 	# agdaPrelude
@@ -131,8 +162,10 @@ mkDerivation {
       ];
     };
 
-    factorio = pkgs.callPackage ./factorio.nix { releaseType = "alpha"; username = "rotsor+factorio@gmail.com"; password = "w6qQmCBYbHmemUchKieP"; };
-    factorio_0_15 = pkgs.callPackage ./factorio-0.15.nix { releaseType = "alpha"; username = "rotsor+factorio@gmail.com"; password = "rotsor+factorio"; };
-    factorio_0_16 = pkgs.callPackage ./factorio-0.16.nix { releaseType = "alpha"; username = "rotsor+factorio@gmail.com"; password = "rotsor+factorio"; };
+    factorio = super.factorio.override {
+      username = "rotsor";
+      token = "4c13a0b64dc3575ada2813ddb339ff";
+    };
   };
 }
+
