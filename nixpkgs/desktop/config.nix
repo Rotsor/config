@@ -89,7 +89,6 @@ in
 
 	dmenu # should really only be accessible to xmonad
 	electrum
-	myEmacs
 	evince
 	file
 	geeqie
