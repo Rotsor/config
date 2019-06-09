@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+rel=$1
+
+nix-env -q --out-path | while read name path; do
+  if stat "$path/$rel" 2>/dev/null >/dev/null; then echo "$name"; fi;
+done
